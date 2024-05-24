@@ -152,8 +152,8 @@ def download_file(url):
         directory = os.path.dirname(filepath)
         if not os.path.exists(directory):
             os.makedirs(directory)
-        f = open(filepath, 'wb')
-        f.write(data.read())
+        with open(filepath, 'wb') as f:
+            f.write(data.read())
         print('Downloaded: %s' % (filepath))
     except (HTTPError, URLError, IOError) as ex:
         if type(ex) == HTTPError:
