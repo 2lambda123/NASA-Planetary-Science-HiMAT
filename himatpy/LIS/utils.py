@@ -14,7 +14,7 @@ from dask.diagnostics import ProgressBar
 __author__ = ['Anthony Arendt', 'Landung Setiawan']
 
 
-def get_xr_dataset(datadir=None, fname=None, multiple_nc=False, twoDcoords=False, files=[], keepVars=[], **kwargs):
+def get_xr_dataset(datadir=None, fname=None, multiple_nc=False, twoDcoords=False, files=None, keepVars=None, **kwargs):
     """
     Reads in output from the NASA Land Information System (LIS) model.
     Returns a "cleaned" xarray dataset. Users can read a single or multiple NetCDF file(s). 
@@ -28,6 +28,8 @@ def get_xr_dataset(datadir=None, fname=None, multiple_nc=False, twoDcoords=False
         Arbitrary keyword arguments related to xarray open_dataset or open_mfdataset.
     :return: xarray dataset
     """
+    files = [] if files is None else files
+    keepVars = [] if keepVars is None else keepVars
     if not multiple_nc:
         try:
             ds = xr.open_dataset(os.path.join(datadir, fname), **kwargs)
